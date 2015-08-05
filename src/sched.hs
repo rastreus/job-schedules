@@ -35,7 +35,7 @@ diffForBest' ys d t zs
     where
       f    = snd (head ys)
       h    = snd t
-      diff = getGreatestDiff ys t 
+      diff = getGreatestDiff ys t
 
 keepTheBest :: [(Int, Int)] -> Int -> (Int, Int) -> [(Int, Int)]
 keepTheBest ys d t = keepTheBest' ys d t []
@@ -43,7 +43,7 @@ keepTheBest ys d t = keepTheBest' ys d t []
 keepTheBest' :: [(Int, Int)] -> Int -> (Int, Int) -> [(Int, Int)] -> [(Int, Int)]
 keepTheBest' [] d t zs
     | length zs == d = diffForBest zs d t
-    | otherwise      = (t : zs)
+    | otherwise      = t : zs
 keepTheBest' ys d t zs
     | h > f && e <= g && g <= count = keepTheBest' (tail ys) d t zs
     | otherwise                     = keepTheBest' (tail ys) d t (head ys : zs)
@@ -104,8 +104,7 @@ getProfit :: [(Int, Int)] -> Int
 getProfit xs = getProfit' xs 0
 
 getProfit' :: [(Int, Int)] -> Int -> Int
-getProfit' [] n     = n
-getProfit' (x:xs) n = getProfit' xs (n + snd x)
+getProfit' xs n = foldl (\ n x -> n + snd x) n xs
 
 getDeadline :: [(Int, Int)] -> Int
 getDeadline xs = getDeadline' xs 0
